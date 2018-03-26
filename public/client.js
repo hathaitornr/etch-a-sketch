@@ -5,6 +5,16 @@ var previousPosition=[0,0]; // previous position to draw a line from
 var ctx = Sketch.create(); //Creating the drawing context
 var firstMessage=true;    // What the first message, to start on the first value
 
+function getRand(val) {
+    return Math.floor(Math.random() * Math.floor(val));
+}
+
+function getRandomMinion(){
+    var dir = 'minion';
+    var fileNames = ['minion1.png','minion2.png','minion3.png','minion4.png','minion5.png','minion6.png'];
+    var index = getRand(fileNames.length);
+    return dir + '/' + fileNames[index];
+}
     ctx.container = document.getElementById( 'container' ); //reference drawing canvas
     ctx.autoclear= false; // making sure it stays
     ctx.retina='auto';
@@ -17,17 +27,18 @@ var firstMessage=true;    // What the first message, to start on the first value
     });
 
 
-    socket.on('minion', function(){
-      image = new Image();
-      image.src = '../minion/minion1.png';
-      image.onload = function() {
-        ctx.container.drawImage(image, 0, 0)
-      }
+    socket.on('minion', function() {
+      var maxX = 1000;
+      var maxY = 1000;
+      console.log('hihi');
+      var image = new Image(10, 10);
+      image.src = getRandomMinion();
+      ctx.drawImage(image, getRand(maxX), getRand(maxY), 200, 100);
     });
 
 
     socket.on('new-pos', function(newPosition) { // handling new sensor values
-
+      console.log('drawing');
       if(firstMessage){ // if its the first message store that value as previous
         firstMessage=false;
         previousPosition=newPosition;
