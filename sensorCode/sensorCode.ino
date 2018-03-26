@@ -42,6 +42,7 @@ void loop(){
     if (fsrValue > 500){
       digitalWrite(ledPin, HIGH); // turn LED on
       Serial.println("minion\r\n");
+      delay(1000);
     }
   
     // send a reset code to serial port
