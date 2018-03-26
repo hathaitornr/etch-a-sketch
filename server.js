@@ -34,7 +34,11 @@ serial.pipe(parser);
 parser.on('data', function(data) { // on data from the arduino
   if(data=='rst'){  // if its the 'rst' string call reset
     io.emit('reset');
-  }else{ // any other data we try to forward by spliting it
+  }
+  else if(data == 'minion'){
+    console.log('Drawing a minion!');
+  }
+  else{ // any other data we try to forward by spliting it
     var transmitData = [data.split(',')[0],data.split(',')[1]];
     io.emit('new-pos', transmitData);
   }
