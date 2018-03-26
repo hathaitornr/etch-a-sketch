@@ -25,7 +25,19 @@ void setup(){
 
 void loop(){
 	if (millis() >= targetTime) {
-		
+
+    int xPosition = analogRead(SENSORPINA);
+    int yPosition = analogRead(SENSORPINB);
+      
+    //TODO: combine them into a string that can be understood by server.js
+    String combinedString = String(xPosition) + "," + String(yPosition) + "\r\n";
+      
+    //TODO: send the string over serial
+    Serial.println(combinedString.c_str());
+
+    targetTime = millis() + interval;
+	}
+
     fsrValue = analogRead(FSR);
     if (fsrValue > 500){
       digitalWrite(ledPin, HIGH); // turn LED on
@@ -41,16 +53,4 @@ void loop(){
     } else if (buttonState == LOW or fsrValue < 10) {
       digitalWrite(ledPin, LOW); // turn LED off
     }
-
-    int xPosition = analogRead(SENSORPINA);
-    int yPosition = analogRead(SENSORPINB);
-      
-    //TODO: combine them into a string that can be understood by server.js
-    String combinedString = String(xPosition) + "," + String(yPosition) + "\r\n";
-      
-    //TODO: send the string over serial
-    Serial.println(combinedString.c_str());
-
-    targetTime = millis() + interval;
-	}
 }
