@@ -16,10 +16,17 @@ var firstMessage=true;    // What the first message, to start on the first value
       ctx.clear();
     });
 
-    socket.on('new-pos', function(newPosition) { // handling new sensor values
 
-      //TODO: Map the incoming 10-bit numbers to the height and width of the screen.
-      // See https://github.com/soulwire/sketch.js/wiki/API for sketch references
+    socket.on('minion', function(){
+      image = new Image();
+      image.src = '../minion/minion1.png';
+      image.onload = function() {
+        ctx.container.drawImage(image, 0, 0)
+      }
+    });
+
+
+    socket.on('new-pos', function(newPosition) { // handling new sensor values
 
       if(firstMessage){ // if its the first message store that value as previous
         firstMessage=false;
@@ -29,7 +36,7 @@ var firstMessage=true;    // What the first message, to start on the first value
         ctx.lineJoin = 'round';
         ctx.fillStyle = ctx.strokeStyle = COLOUR;
         ctx.lineWidth = radius;
-        ctx.beginPath();  //begin a adrawing
+        ctx.beginPath();  //begin a drawing
         ctx.moveTo( previousPosition[0], previousPosition[1] ); // from
         ctx.lineTo( newPosition[0],  newPosition[1]); // to
         ctx.stroke(); // and only draw a stroke
