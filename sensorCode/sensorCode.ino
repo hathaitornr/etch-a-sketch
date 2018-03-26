@@ -26,13 +26,10 @@ void setup(){
 void loop(){
 	if(millis()>=targetTime){
 		targetTime= millis()+interval;
-		Serial.println(analogRead(SENSORPINA));
-     //TODO: Add other sensor read outs
-    Serial.println(analogRead(SENSORPINB));
 
      //TODO: convert values into a string https://www.arduino.cc/en/Tutorial/StringConstructors
-    String stringX = String(analogRead(A1), DEC);
-    String stringY = String(analogRead(A0), DEC);
+    String stringX = String(analogRead(SENSORPINA), DEC);
+    String stringY = String(analogRead(SENSORPINB), DEC);
     
 		 //TODO: combine them into a string that can be understood by server.js
     String combinedString = stringX + "," + stringY + "\r\n";
@@ -44,12 +41,6 @@ void loop(){
 	}
 	// TODO: Detect if you want to reset the screen(shake the etch-a-sketch)
   // TODO: write the reset message(see server.js) to the serial port
-  buttonState = digitalRead(buttonPin);
-  if (buttonState == HIGH) {
-    digitalWrite(ledPin, HIGH); // turn LED on
-    String reset = String("rst\r\n");
-    Serial.println(reset);
-  }
 
   fsrValue = analogRead(FSR);
   if (fsrValue > 500){
@@ -58,6 +49,13 @@ void loop(){
 //    delay(100);
   }
 
+  buttonState = digitalRead(buttonPin);
+  if (buttonState == HIGH) {
+    digitalWrite(ledPin, HIGH); // turn LED on
+    String reset = String("rst\r\n");
+    Serial.println(reset);
+  }
+  
   else if (buttonState == LOW or fsrValue < 10) {
     digitalWrite(ledPin, LOW); // turn LED off
   }
