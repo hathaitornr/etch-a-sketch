@@ -31,9 +31,14 @@ function getRandomMinion(){
       var maxX = 1000;
       var maxY = 1000;
       console.log('hihi');
-      var image = new Image(10, 10);
+      var image = new Image();
       image.src = getRandomMinion();
-      ctx.drawImage(image, getRand(maxX), getRand(maxY), 200, 100);
+      image.onload = function(){
+          var width = image.width;
+          var height = image.height;
+          ctx.drawImage(image, previousPosition[0], previousPosition[1], width/6, height/6);
+      console.log(previousPosition[0]+', '+previousPosition[1] + 'w: ' + width + 'h: ' + height);
+      }
     });
 
 
