@@ -27,32 +27,32 @@ void loop(){
 	if(millis()>=targetTime){
 		targetTime= millis()+interval;
 
-     //TODO: convert values into a string https://www.arduino.cc/en/Tutorial/StringConstructors
     int xPosition = analogRead(SENSORPINA);
     int yPosition = analogRead(SENSORPINB);
-    
-		 //TODO: combine them into a string that can be understood by server.js
+      
+    //TODO: combine them into a string that can be understood by server.js
     String combinedString = String(xPosition) + "," + String(yPosition) + "\r\n";
-    
-		 //TODO: send the string over serial
+      
+    //TODO: send the string over serial
     Serial.println(combinedString.c_str());
-	}
 
-  fsrValue = analogRead(FSR);
-  if (fsrValue > 500){
-    digitalWrite(ledPin, HIGH); // turn LED on
-    Serial.println("minion\r\n");
-  }
-
-// send a reset code to serial port
-  buttonState = digitalRead(buttonPin);
-  if (buttonState == HIGH) {
-    digitalWrite(ledPin, HIGH); // turn LED on
-    String reset = String("rst\r\n");
-    Serial.println(reset);
-  }
+    
+    fsrValue = analogRead(FSR);
+    if (fsrValue > 500){
+      digitalWrite(ledPin, HIGH); // turn LED on
+      Serial.println("minion\r\n");
+    }
   
-  else if (buttonState == LOW or fsrValue < 10) {
-    digitalWrite(ledPin, LOW); // turn LED off
-  }
+    // send a reset code to serial port
+    buttonState = digitalRead(buttonPin);
+    if (buttonState == HIGH) {
+      digitalWrite(ledPin, HIGH); // turn LED on
+      String reset = String("rst\r\n");
+      Serial.println(reset);
+    }
+    
+    else if (buttonState == LOW or fsrValue < 10) {
+      digitalWrite(ledPin, LOW); // turn LED off
+    }
+	}
 }
