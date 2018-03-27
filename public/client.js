@@ -43,6 +43,14 @@ function getRandomMinion(){
 
 
     socket.on('new-pos', function(newPosition) { // handling new sensor values
+      // map the incoming 10-bit numbers to the height and width of the screen.
+      var x0 = 0;
+      var x1 = ctx.width;
+      var y0 = 0;
+      var y1 = ctx.height;
+      newPosition[0] = map(newPosition[0], 0, 1023, x0, x1);
+      newPosition[1] = map(newPosition[1], 0, 1023, y0, y1);
+      
       console.log('drawing');
       if(firstMessage){ // if its the first message store that value as previous
         firstMessage=false;
